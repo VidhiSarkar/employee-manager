@@ -1,11 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import Header from './components/Header';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import Employees from './containers/Employees';
-
+import Dashboard from './containers/Dashboard';
 const routes = (
     <Switch>
+        <Route path="/dashboard" component={Dashboard} />
         <Route path="/" exact component={Employees} />
         <Redirect to="/" />
     </Switch>
@@ -13,11 +13,9 @@ const routes = (
 
 function App() {
   return (
-      <div>
-          <Header>
-            {routes}
-          </Header>
-      </div>
+      <Header>
+        {routes}
+      </Header>
   );
 }
 

@@ -34,6 +34,7 @@
     ]
   },
   "devDependencies": {
+    "clsx": "^1.1.0",
     "file-loader": "^5.0.2",
     "material-table": "^1.56.1",
     "react-redux": "^7.1.3",

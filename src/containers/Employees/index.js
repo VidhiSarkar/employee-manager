@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import MaterialTable from 'material-table';
+import Grid from '@material-ui/core/Grid';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
@@ -57,23 +58,24 @@ const Employees=()=>{
         ],
     });
     return(
-        <MaterialTable
+        <Grid style={{marginTop: '100px',marginLeft: '20px'}} lg={11} xs={11} xl={11} md={11}>
+            <MaterialTable
             title="Editable Example"
             columns={state.columns}
             data={state.data}
             icons={tableIcons}
             editable={{
-                onRowAdd: newData =>
-                    new Promise(resolve => {
-                        setTimeout(() => {
-                            resolve();
-                            setState(prevState => {
-                                const data = [...prevState.data];
-                                data.push(newData);
-                                return { ...prevState, data };
-                            });
-                        }, 600);
-                    }),
+                // onRowAdd: newData =>
+                //     new Promise(resolve => {
+                //         setTimeout(() => {
+                //             resolve();
+                //             setState(prevState => {
+                //                 const data = [...prevState.data];
+                //                 data.push(newData);
+                //                 return { ...prevState, data };
+                //             });
+                //         }, 600);
+                //     }),
                 onRowUpdate: (newData, oldData) =>
                     new Promise(resolve => {
                         setTimeout(() => {
@@ -100,6 +102,7 @@ const Employees=()=>{
                     }),
             }}
         />
+        </Grid>
     );
 };
 export default Employees;
