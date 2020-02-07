@@ -1,5 +1,7 @@
 import React, { forwardRef } from 'react';
 import MaterialTable from 'material-table';
+import { makeStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -16,6 +18,7 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
+
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
     Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -35,7 +38,17 @@ const tableIcons = {
     ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
 };
+const useStyles = makeStyles(theme => ({
+    margin: {
+        padding: theme.spacing(1),
+    },
+}));
 const Employees=()=>{
+    const classes = useStyles();
+    const handleClick=(e,rowData)=>{
+        e.preventDefault();
+        console.log('clicked',rowData);
+    };
     const [state, setState] = React.useState({
         columns: [
             { title: 'Name', field: 'name' },
@@ -45,6 +58,11 @@ const Employees=()=>{
                 title: 'Birth Place',
                 field: 'birthCity',
                 lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
+            },
+            { title: "Options", render: rowData => (
+                <IconButton aria-label="Edit" onClick={(e)=>handleClick(e,rowData)} className={classes.margin} size="small">
+                    <Edit fontSize="inherit" />
+                </IconButton> )
             },
         ],
         data: [
@@ -64,43 +82,6 @@ const Employees=()=>{
             columns={state.columns}
             data={state.data}
             icons={tableIcons}
-            editable={{
-                // onRowAdd: newData =>
-                //     new Promise(resolve => {
-                //         setTimeout(() => {
-                //             resolve();
-                //             setState(prevState => {
-                //                 const data = [...prevState.data];
-                //                 data.push(newData);
-                //                 return { ...prevState, data };
-                //             });
-                //         }, 600);
-                //     }),
-                onRowUpdate: (newData, oldData) =>
-                    new Promise(resolve => {
-                        setTimeout(() => {
-                            resolve();
-                            if (oldData) {
-                                setState(prevState => {
-                                    const data = [...prevState.data];
-                                    data[data.indexOf(oldData)] = newData;
-                                    return { ...prevState, data };
-                                });
-                            }
-                        }, 600);
-                    }),
-                onRowDelete: oldData =>
-                    new Promise(resolve => {
-                        setTimeout(() => {
-                            resolve();
-                            setState(prevState => {
-                                const data = [...prevState.data];
-                                data.splice(data.indexOf(oldData), 1);
-                                return { ...prevState, data };
-                            });
-                        }, 600);
-                    }),
-            }}
         />
         </Grid>
     );
